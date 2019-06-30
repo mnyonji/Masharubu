@@ -1,0 +1,70 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="sighting">
+            <h2><span>Sighting</span> {{sighting.id}}</h2>
+            <hr>
+            <jhi-alert-error></jhi-alert-error>
+            <dl class="row-md jh-entity-details">
+                <dt><span>Picture</span></dt>
+                <dd>
+                    <div *ngIf="sighting.picture">
+                        <a (click)="openFile(sighting.pictureContentType, sighting.picture)">
+                            <img [src]="'data:' + sighting.pictureContentType + ';base64,' + sighting.picture" style="max-width: 100%;" alt="sighting image"/>
+                        </a>
+                        {{sighting.pictureContentType}}, {{byteSize(sighting.picture)}}
+                    </div>
+                </dd>
+                <dt><span>Latitude</span></dt>
+                <dd>
+                    <span>{{sighting.latitude}}</span>
+                </dd>
+                <dt><span>Longitude</span></dt>
+                <dd>
+                    <span>{{sighting.longitude}}</span>
+                </dd>
+                <dt><span>Altitude</span></dt>
+                <dd>
+                    <span>{{sighting.altitude}}</span>
+                </dd>
+                <dt><span>Date Sighted</span></dt>
+                <dd>
+                    <span>{{sighting.dateSighted}}</span>
+                </dd>
+                <dt><span>Description</span></dt>
+                <dd>
+                    <span>{{sighting.description}}</span>
+                </dd>
+                <dt><span>Driver</span></dt>
+                <dd>
+                    <div *ngIf="sighting.driverId">
+                        <a [routerLink]="['/driver', sighting.driverId, 'view']">{{sighting.driverName}}</a>
+                    </div>
+                </dd>
+                <dt><span>Animal</span></dt>
+                <dd>
+                    <div *ngIf="sighting.animalId">
+                        <a [routerLink]="['/animal', sighting.animalId, 'view']">{{sighting.animalName}}</a>
+                    </div>
+                </dd>
+                <dt><span>Park</span></dt>
+                <dd>
+                    <div *ngIf="sighting.parkId">
+                        <a [routerLink]="['/park', sighting.parkId, 'view']">{{sighting.parkName}}</a>
+                    </div>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/sighting', sighting.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

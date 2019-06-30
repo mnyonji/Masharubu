@@ -1,0 +1,90 @@
+entity Country {
+	name String required maxlength(100),
+    alphaCode2 String maxlength(2),
+    alphaCode3 String maxlength(3),
+    countryCode String maxlength(3),
+    numericCode Integer,
+    flagIcon ImageBlob
+}
+
+entity Park {
+	name String required maxlength(100),
+    location String required maxlength(100)
+}
+
+entity TourOperator {
+	name String required maxlength(100),
+	phoneNbr String required maxlength(20),
+    emailAddr String required maxlength(100),
+    status Status required,
+	createdBy Integer required,
+    dateCreated ZonedDateTime,
+    validatedBy Integer required,
+    dateValidated ZonedDateTime,
+    PhysicalAddress String required
+}
+
+entity Driver {
+	name String required maxlength(100),
+    phoneNbr String required maxlength(20),
+    emailAddr String required maxlength(100),
+    gender Gender required,
+    status Status required,
+	createdBy Integer required,
+    dateCreated ZonedDateTime,
+	validatedBy Integer required,
+    dateValidated ZonedDateTime
+}
+
+entity Sighting {
+	picture ImageBlob required,
+    latitude Float required,
+    longitude Float required,
+    altitude Float required,
+    dateSighted ZonedDateTime,
+    description String
+}
+
+
+entity Animal {
+	name String required maxlength(100),
+    description String
+}
+
+enum Gender {
+	MALE, FEMALE
+}
+
+enum Status {
+	NEW, ACTIVE, SUSPENDED, DEACTIVATED
+}
+
+relationship ManyToOne {
+	Driver{tourOperator(name)} to TourOperator
+}
+
+relationship ManyToOne {
+	Park{country(name)} to Country
+}
+
+relationship ManyToOne {
+	Sighting{driver(name)} to Driver
+	Sighting{animal(name)} to Animal
+    Sighting{park(name)} to Park
+}
+
+relationship OneToOne {
+	Driver{user(login)} to User
+}
+
+relationship OneToOne {
+	TourOperator{user(login)} to User
+}
+
+paginate * with pagination
+
+dto * with mapstruct
+
+service all with serviceImpl
+
+//angularSuffix * with mySuffix

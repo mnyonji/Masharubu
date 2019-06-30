@@ -1,0 +1,63 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="tourOperator">
+            <h2><span>Tour Operator</span> {{tourOperator.id}}</h2>
+            <hr>
+            <jhi-alert-error></jhi-alert-error>
+            <dl class="row-md jh-entity-details">
+                <dt><span>Name</span></dt>
+                <dd>
+                    <span>{{tourOperator.name}}</span>
+                </dd>
+                <dt><span>Phone Nbr</span></dt>
+                <dd>
+                    <span>{{tourOperator.phoneNbr}}</span>
+                </dd>
+                <dt><span>Email Addr</span></dt>
+                <dd>
+                    <span>{{tourOperator.emailAddr}}</span>
+                </dd>
+                <dt><span>Status</span></dt>
+                <dd>
+                    <span>{{tourOperator.status}}</span>
+                </dd>
+                <dt><span>Created By</span></dt>
+                <dd>
+                    <span>{{tourOperator.createdBy}}</span>
+                </dd>
+                <dt><span>Date Created</span></dt>
+                <dd>
+                    <span>{{tourOperator.dateCreated}}</span>
+                </dd>
+                <dt><span>Validated By</span></dt>
+                <dd>
+                    <span>{{tourOperator.validatedBy}}</span>
+                </dd>
+                <dt><span>Date Validated</span></dt>
+                <dd>
+                    <span>{{tourOperator.dateValidated}}</span>
+                </dd>
+                <dt><span>Physical Address</span></dt>
+                <dd>
+                    <span>{{tourOperator.physicalAddress}}</span>
+                </dd>
+                <dt><span>User</span></dt>
+                <dd>
+                    {{tourOperator.userLogin}}
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/tour-operator', tourOperator.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

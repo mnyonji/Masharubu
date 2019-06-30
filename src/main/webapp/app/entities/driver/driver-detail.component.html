@@ -1,0 +1,69 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="driver">
+            <h2><span>Driver</span> {{driver.id}}</h2>
+            <hr>
+            <jhi-alert-error></jhi-alert-error>
+            <dl class="row-md jh-entity-details">
+                <dt><span>Name</span></dt>
+                <dd>
+                    <span>{{driver.name}}</span>
+                </dd>
+                <dt><span>Phone Nbr</span></dt>
+                <dd>
+                    <span>{{driver.phoneNbr}}</span>
+                </dd>
+                <dt><span>Email Addr</span></dt>
+                <dd>
+                    <span>{{driver.emailAddr}}</span>
+                </dd>
+                <dt><span>Gender</span></dt>
+                <dd>
+                    <span>{{driver.gender}}</span>
+                </dd>
+                <dt><span>Status</span></dt>
+                <dd>
+                    <span>{{driver.status}}</span>
+                </dd>
+                <dt><span>Created By</span></dt>
+                <dd>
+                    <span>{{driver.createdBy}}</span>
+                </dd>
+                <dt><span>Date Created</span></dt>
+                <dd>
+                    <span>{{driver.dateCreated}}</span>
+                </dd>
+                <dt><span>Validated By</span></dt>
+                <dd>
+                    <span>{{driver.validatedBy}}</span>
+                </dd>
+                <dt><span>Date Validated</span></dt>
+                <dd>
+                    <span>{{driver.dateValidated}}</span>
+                </dd>
+                <dt><span>User</span></dt>
+                <dd>
+                    {{driver.userLogin}}
+                </dd>
+                <dt><span>Tour Operator</span></dt>
+                <dd>
+                    <div *ngIf="driver.tourOperatorId">
+                        <a [routerLink]="['/tour-operator', driver.tourOperatorId, 'view']">{{driver.tourOperatorName}}</a>
+                    </div>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/driver', driver.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>
