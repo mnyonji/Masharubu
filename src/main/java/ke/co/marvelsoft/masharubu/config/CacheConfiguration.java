@@ -43,6 +43,12 @@ public class CacheConfiguration {
             createCache(cm, ke.co.marvelsoft.masharubu.domain.User.class.getName());
             createCache(cm, ke.co.marvelsoft.masharubu.domain.Authority.class.getName());
             createCache(cm, ke.co.marvelsoft.masharubu.domain.User.class.getName() + ".authorities");
+            createCache(cm, ke.co.marvelsoft.masharubu.domain.Country.class.getName());
+            createCache(cm, ke.co.marvelsoft.masharubu.domain.Park.class.getName());
+            createCache(cm, ke.co.marvelsoft.masharubu.domain.TourOperator.class.getName());
+            createCache(cm, ke.co.marvelsoft.masharubu.domain.Driver.class.getName());
+            createCache(cm, ke.co.marvelsoft.masharubu.domain.Sighting.class.getName());
+            createCache(cm, ke.co.marvelsoft.masharubu.domain.Animal.class.getName());
             // jhipster-needle-ehcache-add-entry
         };
     }

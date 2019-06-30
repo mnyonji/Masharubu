@@ -1,0 +1,80 @@
+<div>
+    <h2 id="page-heading">
+        <span>Countries</span>
+        <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-country" [routerLink]="['/country/new']">
+            <fa-icon [icon]="'plus'"></fa-icon>
+            <span >
+            Create new Country
+            </span>
+        </button>
+    </h2>
+    <jhi-alert></jhi-alert>
+    <br/>
+    <div class="alert alert-warning" *ngIf="countries?.length === 0">
+        <span>No countries found</span>
+    </div>
+    <div class="table-responsive" *ngIf="countries?.length > 0">
+        <table class="table table-striped">
+            <thead>
+            <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="transition.bind(this)">
+            <th jhiSortBy="id"><span>ID</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="name"><span>Name</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="alphaCode2"><span>Alpha Code 2</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="alphaCode3"><span>Alpha Code 3</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="countryCode"><span>Country Code</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="numericCode"><span>Numeric Code</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="flagIcon"><span>Flag Icon</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let country of countries ;trackBy: trackId">
+                <td><a [routerLink]="['/country', country.id, 'view' ]">{{country.id}}</a></td>
+                <td>{{country.name}}</td>
+                <td>{{country.alphaCode2}}</td>
+                <td>{{country.alphaCode3}}</td>
+                <td>{{country.countryCode}}</td>
+                <td>{{country.numericCode}}</td>
+                <td>
+                    <a *ngIf="country.flagIcon" (click)="openFile(country.flagIconContentType, country.flagIcon)">
+                        <img [src]="'data:' + country.flagIconContentType + ';base64,' + country.flagIcon" style="max-height: 30px;" alt="country image"/>
+                    </a>
+                    <span *ngIf="country.flagIcon">{{country.flagIconContentType}}, {{byteSize(country.flagIcon)}}</span>
+                </td>
+                <td class="text-right">
+                    <div class="btn-group">
+                        <button type="submit"
+                                [routerLink]="['/country', country.id, 'view' ]"
+                                class="btn btn-info btn-sm">
+                            <fa-icon [icon]="'eye'"></fa-icon>
+                            <span class="d-none d-md-inline">View</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/country', country.id, 'edit']"
+                                class="btn btn-primary btn-sm">
+                            <fa-icon [icon]="'pencil-alt'"></fa-icon>
+                            <span class="d-none d-md-inline">Edit</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', 'country', { outlets: { popup: country.id + '/delete'} }]"
+                                replaceUrl="true"
+                                queryParamsHandling="merge"
+                                class="btn btn-danger btn-sm">
+                            <fa-icon [icon]="'times'"></fa-icon>
+                            <span class="d-none d-md-inline">Delete</span>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div [hidden]="countries?.length === 0">
+        <div class="row justify-content-center">
+            <jhi-item-count [page]="page" [total]="totalItems" [maxSize]="5" [itemsPerPage]="itemsPerPage"></jhi-item-count>
+        </div>
+        <div class="row justify-content-center">
+            <ngb-pagination [collectionSize]="totalItems" [(page)]="page" [pageSize]="itemsPerPage" [maxSize]="5" [rotate]="true" [boundaryLinks]="true" (pageChange)="loadPage(page)"></ngb-pagination>
+        </div>
+    </div>
+</div>

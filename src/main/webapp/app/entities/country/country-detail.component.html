@@ -1,0 +1,52 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="country">
+            <h2><span>Country</span> {{country.id}}</h2>
+            <hr>
+            <jhi-alert-error></jhi-alert-error>
+            <dl class="row-md jh-entity-details">
+                <dt><span>Name</span></dt>
+                <dd>
+                    <span>{{country.name}}</span>
+                </dd>
+                <dt><span>Alpha Code 2</span></dt>
+                <dd>
+                    <span>{{country.alphaCode2}}</span>
+                </dd>
+                <dt><span>Alpha Code 3</span></dt>
+                <dd>
+                    <span>{{country.alphaCode3}}</span>
+                </dd>
+                <dt><span>Country Code</span></dt>
+                <dd>
+                    <span>{{country.countryCode}}</span>
+                </dd>
+                <dt><span>Numeric Code</span></dt>
+                <dd>
+                    <span>{{country.numericCode}}</span>
+                </dd>
+                <dt><span>Flag Icon</span></dt>
+                <dd>
+                    <div *ngIf="country.flagIcon">
+                        <a (click)="openFile(country.flagIconContentType, country.flagIcon)">
+                            <img [src]="'data:' + country.flagIconContentType + ';base64,' + country.flagIcon" style="max-width: 100%;" alt="country image"/>
+                        </a>
+                        {{country.flagIconContentType}}, {{byteSize(country.flagIcon)}}
+                    </div>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/country', country.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

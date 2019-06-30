@@ -1,0 +1,124 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+            <h2 id="jhi-sighting-heading">Create or edit a Sighting</h2>
+            <div>
+                <jhi-alert-error></jhi-alert-error>
+                <div class="form-group" [hidden]="!editForm.get('id').value">
+                    <label for="id">ID</label>
+                    <input type="text" class="form-control" id="id" name="id" formControlName="id"
+                        readonly />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_picture">Picture</label>
+                    <div>
+                        <img [src]="'data:' + editForm.get('pictureContentType').value + ';base64,' + editForm.get('picture').value" style="max-height: 100px;" *ngIf="editForm.get('picture').value" alt="sighting image"/>
+                        <div *ngIf="editForm.get('picture').value" class="form-text text-danger clearfix">
+                            <span class="pull-left">{{editForm.get('pictureContentType').value}}, {{byteSize(editForm.get('picture').value)}}</span>
+                            <button type="button" (click)="clearInputImage('picture', 'pictureContentType', 'fileImage')" class="btn btn-secondary btn-xs pull-right">
+                                <fa-icon [icon]="'times'"></fa-icon>
+                            </button>
+                        </div>
+                        <input type="file" id="file_picture" (change)="setFileData($event, 'picture', true)" accept="image/*"/>
+                    </div>
+                    <input type="hidden" class="form-control" name="picture" id="field_picture"
+                           formControlName="picture"/>
+                    <input type="hidden" class="form-control" name="pictureContentType" id="field_pictureContentType"
+                           formControlName="pictureContentType" />
+                    <div *ngIf="editForm.get('picture').invalid && (editForm.get('picture').dirty || editForm.get('picture').touched)">
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('picture').errors.required">
+                        This field is required.
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_latitude">Latitude</label>
+                    <input type="number" class="form-control" name="latitude" id="field_latitude"
+                           formControlName="latitude"/>
+                    <div *ngIf="editForm.get('latitude').invalid && (editForm.get('latitude').dirty || editForm.get('latitude').touched)">
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('latitude').errors.required">
+                        This field is required.
+                        </small>
+                        <small class="form-text text-danger"
+                            [hidden]="!editForm.get('latitude')?.errors?.number">
+                            This field should be a number.
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_longitude">Longitude</label>
+                    <input type="number" class="form-control" name="longitude" id="field_longitude"
+                           formControlName="longitude"/>
+                    <div *ngIf="editForm.get('longitude').invalid && (editForm.get('longitude').dirty || editForm.get('longitude').touched)">
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('longitude').errors.required">
+                        This field is required.
+                        </small>
+                        <small class="form-text text-danger"
+                            [hidden]="!editForm.get('longitude')?.errors?.number">
+                            This field should be a number.
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_altitude">Altitude</label>
+                    <input type="number" class="form-control" name="altitude" id="field_altitude"
+                           formControlName="altitude"/>
+                    <div *ngIf="editForm.get('altitude').invalid && (editForm.get('altitude').dirty || editForm.get('altitude').touched)">
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('altitude').errors.required">
+                        This field is required.
+                        </small>
+                        <small class="form-text text-danger"
+                            [hidden]="!editForm.get('altitude')?.errors?.number">
+                            This field should be a number.
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_dateSighted">Date Sighted</label>
+                    <div class="d-flex">
+                        <input id="field_dateSighted" type="datetime-local" class="form-control" name="dateSighted" formControlName="dateSighted" placeholder="YYYY-MM-DD HH:mm"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_description">Description</label>
+                    <input type="text" class="form-control" name="description" id="field_description"
+                           formControlName="description"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_driver">Driver</label>
+                    <select class="form-control" id="field_driver" name="driver" formControlName="driverId">
+                        <option [ngValue]="null"></option>
+                        <option [ngValue]="driverOption.id" *ngFor="let driverOption of drivers; trackBy: trackDriverById">{{driverOption.name}}</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_animal">Animal</label>
+                    <select class="form-control" id="field_animal" name="animal" formControlName="animalId">
+                        <option [ngValue]="null"></option>
+                        <option [ngValue]="animalOption.id" *ngFor="let animalOption of animals; trackBy: trackAnimalById">{{animalOption.name}}</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_park">Park</label>
+                    <select class="form-control" id="field_park" name="park" formControlName="parkId">
+                        <option [ngValue]="null"></option>
+                        <option [ngValue]="parkOption.id" *ngFor="let parkOption of parks; trackBy: trackParkById">{{parkOption.name}}</option>
+                    </select>
+                </div>
+            </div>
+            <div>
+                <button type="button" id="cancel-save" class="btn btn-secondary"  (click)="previousState()">
+                    <fa-icon [icon]="'ban'"></fa-icon>&nbsp;<span>Cancel</span>
+                </button>
+                <button type="submit" id="save-entity" [disabled]="editForm.invalid || isSaving" class="btn btn-primary">
+                    <fa-icon [icon]="'save'"></fa-icon>&nbsp;<span>Save</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
